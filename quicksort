@@ -1,0 +1,58 @@
+#include<iostream>
+using namespace std;
+
+int partition(int arr[],int l,int h){
+    int pivot= arr[l];
+    int i=l+1;
+    int j=h;
+
+     while (i <= j) {
+        while (i <= j && arr[i] <= pivot) {
+            i++;
+        }
+
+        while (i <= j && arr[j] > pivot) {
+            j--;
+        }
+
+        if (i < j) {
+            swap(arr[i], arr[j]);
+            i++;
+            j--;
+        }
+    }
+
+swap(arr[l],arr[j]);    
+return j;   
+    
+}
+
+void quicksort (int arr[],int l,int h){
+    if(l<h){
+        
+        int PivotIndex = partition(arr,l,h);
+        quicksort(arr,l,PivotIndex-1);
+        quicksort(arr,PivotIndex+1,h);
+        
+    }
+
+}
+
+int main()
+{
+    int n;
+    cout<<"enter the size :";
+    cin>>n;
+
+    int arr[n];
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+
+    quicksort(arr,0,n-1);
+
+    for(int i=0; i<n; i++){
+        cout<<" "<<arr[i];
+    }
+
+}
