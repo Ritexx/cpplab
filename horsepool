@@ -1,0 +1,55 @@
+#include <iostream>
+#include <cstring>
+
+
+using namespace std;
+
+char str[100], ptn[20];
+int m, n, res, table[1000];
+
+void shift(const char p[]) {
+    m = strlen(p);
+    fill(table, table + 1000, m);
+    for (int j = 0; j < m - 1; ++j)
+        table[p[j]] = m - 1 - j;
+}
+
+int horspool(const char p[], const char t[]) {
+    shift(p);
+    n = strlen(t);
+    for (int i = m - 1; i <= n - 1;) {
+        int k = 0;
+        while (k <= m - 1 && p[m - 1 - k] == t[i - k])
+            ++k;
+        if (k == m)
+            return i - m + 1;
+        else
+            i += table[t[i]];
+    }
+    return -1;
+}
+
+int main() {
+   
+
+    cout << "Enter the text: ";
+    cin.getline(str, sizeof(str));
+
+    cout << "Enter the pattern to be found: ";
+    cin.getline(ptn, sizeof(ptn));
+
+  
+    res = horspool(ptn, str);
+   
+
+   if (res == -1) {
+    cout << "\nPattern not found." << endl;
+    } 
+    
+    else {
+    cout << "Pattern found at position: " << to_string(res + 1) << endl;
+    }
+
+    
+    return 0;
+}
