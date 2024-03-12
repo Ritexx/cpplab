@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+
+const int MAX = 100;
+int minCost, cost[MAX][MAX], parent[MAX], x, y, n;
+
+void findMin() {
+    minCost = 999;
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= n; j++)
+            if (cost[i][j] < minCost) {
+                minCost = cost[i][j];
+                x = i;
+                y = j;
+            }
+}
+
+int checkCycle(int x, int y) {
+    if ((parent[x] == parent[y]) && (parent[x] != 0))
+        return 0;
+    else if (parent[x] == 0 && parent[y] == 0)
+        parent[x] = parent[y] = x;
+    else if (parent[x] == 0)
+        parent[x] = parent[y];
+    else if (parent[x] != parent[y])
+        parent[y] = parent[x];
+    return 1;
+}
+
+int main() {
+    int count = 0, totalCost = 0, flag = 0;
+
+    cout << "Enter the number of vertices: ";
+    cin >> n;
+
+    cout << "Enter the cost matrix (Enter 999 for no edges and self-loops):" << endl;
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= n; j++)
+            cin >> cost[i][j];
+
+    while (count != n - 1 && minCost != 999) {
+        findMin();
+        flag = checkCycle(x, y);
+        if (flag == 1) {
+            cout << endl << x << " -----> " << y << " == " << cost[x][y] << endl;
+            count++;
+            totalCost += cost[x][y];
+        }
+        cost[x][y] = cost[y][x] = 999;
+    }
+
+    cout << "\nThe total cost of the minimum spanning tree = " << totalCost << endl;
+
+    return 0;
+}
+
