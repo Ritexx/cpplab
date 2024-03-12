@@ -1,0 +1,85 @@
+#include<iostream>
+using namespace std;
+
+int min(int a, int b){
+    return (a<b)? a:b;
+}
+
+
+int floyreds(int arr[20][20], int n){
+    for(int k=1; k<=n; k++){
+        for(int i=1; i<=n; i++){
+            for(int j=1; j<=n; j++){
+                if (i == j)
+                {
+                    arr[i][j]=0;
+                }
+                else{
+                arr[i][j]=min(arr[i][j], arr[i][k]+arr[k][j] );
+                }
+    }
+        
+    }
+    }
+
+}
+
+int main()
+{
+    int n;
+    cout<<"enter the no of vertex: ";
+    cin>>n;
+
+    int arr[20][20];
+
+    // for infinity
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=n; j++){
+            arr[i][j]=999;
+    }
+    }
+
+    cout<<"enter the adjacent matrix: "<<endl;
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=n; j++){
+            cin>>arr[i][j];
+        
+    }
+
+    }
+
+    
+
+    cout<<"your adjectent matrix"<< endl;
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=n; j++){
+            cout<<arr[i][j]<<"\t";
+        
+        }
+        cout<<"\n";
+
+    }
+
+    floyreds(arr,n);
+
+    cout<<"your distance matrix"<< endl;
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=n; j++){
+            cout<<arr[i][j]<<"\t";
+        
+        }
+        cout<<"\n";
+
+    }
+
+    cout<<"shortest distance"<<endl;
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=n; j++){
+            if(i!=j){
+                cout<<"\n <"<< i << ","<<j<<">=\t"<<arr[i][j];
+            }
+        }
+    }
+
+
+}
